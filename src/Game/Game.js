@@ -1,34 +1,45 @@
+import _ from 'lodash';
 export default class Game {
 
   rules = [
     {
       name: 'rock',
-      winAgainst: [ 'scissor', 'lizard' ]
+      winAgainst: ['scissor']
     },
     {
       name: 'paper',
-      winAgainst: [ 'rock', 'spock' ]
+      winAgainst: ['rock']
     },
     {
       name: 'scissor',
-      winAgainst: [ 'paper', 'lizard' ]
+      winAgainst: ['paper']
     },
   ];
 
   constructor(bonusModeEnabled = false) {
       this.bonusModeEnabled = bonusModeEnabled;
+      this.initBonusMode = this.initBonusMode.bind(this);
       if (bonusModeEnabled) {
-        // this.initBonusMode();
+        this.initBonusMode();
       }
   }
   play(playerChoise, enemyChoise) {
 
   }
   initBonusMode() {
-    this.rules.rock.winAgainst.push('lizard');
-    this.rules.paper.winAgainst.push('spock');
-    this.rules.scissor.winAgainst.push('lizard');
-    this.rules.lizard.winAgainst = ['spock', 'paper'];
-    this.rules.spock.winAgainst = ['scissor', 'rock']
+    _.find(this.rules, { name: 'rock' }).winAgainst.push('lizard');
+    _.find(this.rules, { name: 'paper' }).winAgainst.push('spock');
+    _.find(this.rules, { name: 'scissor' }).winAgainst.push('lizard');
+
+    this.rules.push(
+      {
+        name: 'lizard',
+        winAgainst: ['spock', 'paper']
+      },
+      {
+        name: 'spock',
+        winAgainst: ['scissor', 'rock']
+      }
+    );
   }
 }
