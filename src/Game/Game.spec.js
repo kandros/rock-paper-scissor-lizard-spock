@@ -80,24 +80,23 @@ describe('Game', () => {
       ).toBe(true);
     });
 
-    // win agains lenght should be 2 if bonus disable
-    // win agains lenght should be 3 if bonus enabled
+    describe('symbol', () => {
+      it('should win against one other symbols if bonusModeEnabled is false', () => {
+        expect(
+          game.rules.every(symbol => symbol.winAgainst.length === 1)
+        ).toBe(true);
+      });
+
+      it('should win against two other symbols if bonusModeEnabled is true', () => {
+        const bonusGame = new Game(true);
+        expect(
+          bonusGame.rules.every(symbol => symbol.winAgainst.length === 2)
+        ).toBe(true);
+      });
+    });
+
   });
 
 
-  describe('symbol', () => {
-    it('should win agains one other symbols if bonusModeEnabled is false', () => {
-      game.rules.every(symbol => console.log('test' + symbol.name + ' ' + symbol.winAgainst));
-      expect(
-        game.rules.every(symbol => symbol.winAgainst.length === 1)
-      ).toBe(true);
-    });
 
-    it('should win agains two other symbols if bonusModeEnabled is true', () => {
-      const bonusGame = new Game(true);
-      expect(
-        bonusGame.rules.every(symbol => symbol.winAgainst.length === 2)
-      ).toBe(true);
-    });
-  });
 });
