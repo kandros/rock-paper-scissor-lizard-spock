@@ -13,7 +13,7 @@ export default class Game {
     {
       name: 'scissor',
       winAgainst: ['paper']
-    },
+    }
   ];
 
   constructor(bonusModeEnabled = false) {

@@ -37,8 +37,31 @@ describe('Game', () => {
   describe('rules', () => {
     it('should be an Array', () => {
         expect(
-          game.rules.constructor
-        ).toEqual(Array);
+          game.rules
+        ).toBeAn('array');
+    });
+
+    it('should be equal to an expected array when bonusModeEnabled is false', () => {
+        const actual = game.rules;
+        const expected = [
+          { name: 'rock', winAgainst: ['scissor'] },
+          { name: 'paper', winAgainst: ['rock'] },
+          { name: 'scissor', winAgainst: ['paper'] }
+        ];
+        expect(actual).toEqual(expected);
+    });
+
+    it('should be equal to an expected array when bonusModeEnabled is disabled', () => {
+        const bonusGame = new Game(true);
+        const actual = bonusGame.rules;
+        const expected = [
+          { name: 'rock', winAgainst: ['scissor', 'lizard'] },
+          { name: 'paper', winAgainst: ['rock', 'spock'] },
+          { name: 'scissor', winAgainst: ['paper', 'lizard'] },
+          { name: 'lizard', winAgainst: ['spock', 'paper'] },
+          { name: 'spock', winAgainst: ['scissor', 'rock'] },
+        ];
+        expect(actual).toEqual(expected);
     });
 
     it('should contain 3 objects if bonusModeEnabled is false', () => {
