@@ -1,16 +1,19 @@
 export default class Game {
 
-  rules = {
-    rock: { winAgainst:
-      [ 'scissor', 'lizard' ]
+  rules = [
+    {
+      name: 'rock',
+      winAgainst: [ 'scissor', 'lizard' ]
     },
-    paper: { winAgainst:
-      [ 'rock', 'spock' ]
+    {
+      name: 'paper',
+      winAgainst: [ 'rock', 'spock' ]
     },
-    scissor: { winAgainst:
-      [ 'paper', 'lizard' ]
+    {
+      name: 'scissor',
+      winAgainst: [ 'paper', 'lizard' ]
     },
-  };
+  ];
 
   constructor(bonusModeEnabled = false) {
       this.bonusModeEnabled = bonusModeEnabled;
