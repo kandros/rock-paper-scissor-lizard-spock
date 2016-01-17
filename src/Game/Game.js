@@ -1,4 +1,4 @@
-export default class game {
+export default class Game {
 
   rules = {
     rock: { winAgainst:
