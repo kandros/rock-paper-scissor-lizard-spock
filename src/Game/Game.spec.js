@@ -34,9 +34,9 @@ describe('Game', () => {
       ).toExist();
   });
   describe('rules', () => {
-    // it('should contain 3 object is bonusModeEnabled is false', () => {
-    //   expect(
-    //   );
-    // });
+    it('should contain 3 objects if bonusModeEnabled is false', () => {
+      expect(
+      );
+    });
   });
 });
