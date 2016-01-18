@@ -31,7 +31,7 @@ describe('UserPlayer', () => {
     user = new UserPlayer();
   });
 
-  it('should extends Player', () => {
+  it('should extend Player', () => {
       expect(
         user instanceof Player
       ).toBe(true);
@@ -44,7 +44,7 @@ describe('ComputerPlayer', () => {
     computer = new ComputerPlayer();
   });
 
-  it('should extends Player', () => {
+  it('should extend Player', () => {
       expect(
         computer instanceof Player
       ).toBe(true);
