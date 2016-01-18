@@ -68,7 +68,6 @@ function playRound(symbol) {
 }
 
 function suspanceCountDown(callback) {
-
   var countDown = 3
   mainContainer.classList.add('suspance');
   upperMessage.innerHTML = countDown;
