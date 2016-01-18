@@ -60,6 +60,7 @@
 
 	var upperMessage = document.querySelector('.upper-message');
 	var mainContainer = document.querySelector('.main-container');
+	var videoSection = document.querySelector('.video-section');
 	var user = new _Player.UserPlayer();
 	var computer = new _Player.ComputerPlayer();
 	var game = new _Game2.default();
@@ -79,6 +80,15 @@
 	  initBonusMode();
 	});
 
+	document.querySelector('.wtf').addEventListener('click', function (e) {
+	  if (videoSection.className.indexOf('is-hidden') !== -1) {
+	    videoSection.classList.remove('is-hidden');
+	    window.scrollTo(0, 10000);
+	  } else {
+	    videoSection.classList.add('is-hidden');
+	  }
+	});
+
 	function initBonusMode() {
 	  game = new _Game2.default(true);
 	  document.querySelector('.main-container').classList.add('is-bonus');
@@ -95,7 +105,7 @@
 
 	  if (winner) {
 	    winner.increaseScore();
-	    upperMessage.innerHTML = '\n      ' + winner.name + ' ha vinto, ora ha ' + winner.getScore() + ' punti\n    ';
+	    upperMessage.innerHTML = '\n      ' + winner.name + ' ha vinto, ora ha ' + winner.getScore() + ' punti!\n    ';
 	    console.log(winner.name, 'won');
 	    console.log(winner.name + '\'s score is now ' + winner.getScore());
 	  } else {

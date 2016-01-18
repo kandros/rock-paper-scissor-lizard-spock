@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 const upperMessage = document.querySelector('.upper-message');
 const mainContainer = document.querySelector('.main-container');
+const videoSection = document.querySelector('.video-section');
 const user = new UserPlayer();
 const computer = new ComputerPlayer();
 let game = new Game();
@@ -20,6 +21,15 @@ document.querySelector('.buttons').addEventListener('click', e => {
 
 document.querySelector('.bazinga').addEventListener('click', e => {
   initBonusMode();
+});
+
+document.querySelector('.wtf').addEventListener('click', e => {
+  if (videoSection.className.indexOf('is-hidden') !== -1) {
+    videoSection.classList.remove('is-hidden');
+    window.scrollTo(0, 10000);
+  } else {
+    videoSection.classList.add('is-hidden');
+  }
 });
 
 function initBonusMode() {
@@ -41,7 +51,7 @@ function playRound(symbol) {
   if (winner) {
     winner.increaseScore();
     upperMessage.innerHTML = `
-      ${winner.name} ha vinto, ora ha ${winner.getScore()} punti
+      ${winner.name} ha vinto, ora ha ${winner.getScore()} punti!
     `;
     console.log(winner.name, 'won');
     console.log(`${winner.name}'s score is now ${winner.getScore()}`);

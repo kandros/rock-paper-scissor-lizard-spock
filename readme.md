@@ -1,3 +1,6 @@
+## Usage
+Run `npm start` to run a webserver with livereload
+
 ## Testing
 Test are written with mocha and assert libraries.  
 You can run them using:  

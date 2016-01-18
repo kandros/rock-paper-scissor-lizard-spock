@@ -24,6 +24,10 @@
   animation: super-pulse 1s infinite;
 }
 
+#messages {
+  -webkit-filter: drop-shadow(2px 2px 10px rgba(0,0,0,0.5));
+
+}
 
 .main-container.suspance .lower-message {
   display: none;
@@ -66,10 +70,20 @@
   cursor: pointer;
   animation: pulse 1.5s infinite;
 }
+.wtf {
+  display: none;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100px;
+  cursor: pointer;
+}
 
 .main-container.is-bonus {
   background: url('../assets/tbbt-bg.jpg');
-  background-position: center center;
+  background-position: center -100px;
+  background-color: #3b5997;
+  background-size: 950px;
   background-repeat: no-repeat;
 }
 .main-container.is-bonus #messages {
@@ -80,11 +94,30 @@
   -webkit-filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
   background: rgba(255,255,255,0.4);
 }
+.main-container.is-bonus .buttons button:focus {
+  background: rgba(255,255,255,0.6);
+}
 .main-container.is-bonus .bonus-button {
   display: inline-block;
 }
-.main-container.is-bonus+.bazinga {
+.main-container.is-bonus ~ .bazinga {
   display: none;
+}
+.main-container.is-bonus ~ .wtf {
+  display: block;
+}
+.video-section.is-hidden {
+  display: none;
+}
+.video-section {
+  background-color: #3b5997;
+  padding-top: 20vh;
+  padding-bottom: 20vh  ;
+}
+.video-section iframe {
+  margin:  0 auto;
+  height: 60vh;
+  display: block;
 }
 
 @-webkit-keyframes pulse{
