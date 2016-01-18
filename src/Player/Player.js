@@ -7,12 +7,12 @@ export default class Player {
 	constructor() {
 	}
 
-	say() {
-		console.log(this.score);
+	sayScore() {
+		console.log('Your score is now', this.score);
 	}
 
-	logResult() {
-		console.log('Your score is now', this.score);
+	getScore() {
+		return this.score;
 	}
 
 	increaseScore() {
@@ -22,24 +22,15 @@ export default class Player {
 }
 
 export class UserPlayer extends Player {
+	name = 'user';
 	constructor(){
 		super();
-	}
-	say() {
-		console.log('this is my fucking score ', this.score);
-	}
-	play(playerChoise, enemyChoise ) {
-		const game = new Game(symbol);
-		game.play(playerChoise, enemyChoise);
 	}
 }
 
 export class ComputerPlayer extends Player {
+	name = 'computer';
 	constructor(){
 		super();
-	}
-
-	randomChoise() {
-
 	}
 }

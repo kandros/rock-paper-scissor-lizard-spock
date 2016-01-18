@@ -19,13 +19,13 @@ export default class Game {
   constructor(bonusModeEnabled = false) {
       this.bonusModeEnabled = bonusModeEnabled;
       this.initBonusMode = this.initBonusMode.bind(this);
+      this.getRandomSymbol = this.getRandomSymbol.bind(this);
+      this.play = this.play.bind(this);
       if (bonusModeEnabled) {
         this.initBonusMode();
       }
   }
-  play(playerChoise, enemyChoise) {
 
-  }
   initBonusMode() {
     _.find(this.rules, { name: 'rock' }).winAgainst.push('lizard');
     _.find(this.rules, { name: 'paper' }).winAgainst.push('spock');
@@ -41,5 +41,19 @@ export default class Game {
         winAgainst: ['scissor', 'rock']
       }
     );
+  }
+
+  getRandomSymbol() {
+    return _.sample(this.rules).name;
+  }
+
+  play({ player: firstPlayer, symbol: firstSymbol }, { player: secondPlayer, symbol: secondSymbol }) {
+    let winner;
+    if (firstSymbol === secondSymbol) {
+    } else if (_.find(this.rules, {name: firstSymbol}).winAgainst.includes(secondSymbol)) {
+      return winner = firstPlayer,  winner;
+    } else {
+      return winner = secondPlayer,  winner;
+    }
   }
 }

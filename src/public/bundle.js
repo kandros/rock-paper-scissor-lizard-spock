@@ -48,57 +48,43 @@
 
 	var _Player = __webpack_require__(1);
 
+	var _Game = __webpack_require__(4);
+
+	var _Game2 = _interopRequireDefault(_Game);
+
 	var _lodash = __webpack_require__(2);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import $ from 'jQuery';
-
-	var rules = {
-	  rock: { winAgainst: ['scissor', 'lizard']
-	  },
-	  paper: { winAgainst: ['rock', 'spock']
-	  },
-	  scissor: { winAgainst: ['paper', 'lizard']
-	  }
-	};
-
-	var choises = ['rock', 'paper', 'scissor'];
-
-	var player = new _Player.UserPlayer();
+	var game = new _Game2.default();
+	var user = new _Player.UserPlayer();
 	var computer = new _Player.ComputerPlayer();
 
-	// player.playAgains(computer.randomChose);
-
-	// $('button').click(function() {
-	//   const choise = $(this).data('game');
-	//   startGame(choise);
-	// })
-
 	document.querySelector('.buttons').addEventListener('click', function (e) {
-	  var choise = e.target.getAttribute('data-game');
-	  startGame(choise);
+	  if (e.target.nodeName === 'BUTTON') {
+	    var choise = e.target.getAttribute('data-game');
+	    playRound(choise);
+	  }
 	});
 
-	function startGame(choise) {
-	  var computerChoise = getComputerChoise();
-	  console.log('tu hai giocato', choise);
-	  if (choise === computerChoise) {
-	    console.log('Pareggio');
-	  } else if (_lodash2.default.includes(rules[choise].winAgainst, computerChoise)) {
-	    console.log('hai vinto');
-	  } else {
-	    console.log('hai perso');
-	  }
-	  console.log('\n');
-	}
+	function playRound(symbol) {
+	  var winner = game.play({
+	    player: user,
+	    symbol: symbol
+	  }, {
+	    player: computer,
+	    symbol: game.getRandomSymbol()
+	  });
 
-	function getComputerChoise() {
-	  var computerChoise = _lodash2.default.sample(choises);
-	  console.log('il computer gioca', computerChoise);
-	  return computerChoise;
+	  if (winner) {
+	    winner.increaseScore();
+	    console.log(winner.name, 'won');
+	    console.log(winner.name + '\'s score is now ' + winner.getScore());
+	  } else {
+	    console.log("it's a tie");
+	  }
 	}
 
 /***/ },
@@ -138,14 +124,14 @@
 		}
 
 		_createClass(Player, [{
-			key: 'say',
-			value: function say() {
-				console.log(this.score);
+			key: 'sayScore',
+			value: function sayScore() {
+				console.log('Your score is now', this.score);
 			}
 		}, {
-			key: 'logResult',
-			value: function logResult() {
-				console.log('Your score is now', this.score);
+			key: 'getScore',
+			value: function getScore() {
+				return this.score;
 			}
 		}, {
 			key: 'increaseScore',
@@ -165,21 +151,11 @@
 		function UserPlayer() {
 			_classCallCheck(this, UserPlayer);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(UserPlayer).call(this));
-		}
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserPlayer).call(this));
 
-		_createClass(UserPlayer, [{
-			key: 'say',
-			value: function say() {
-				console.log('this is my fucking score ', this.score);
-			}
-		}, {
-			key: 'play',
-			value: function play(playerChoise, enemyChoise) {
-				var game = new _Game2.default(symbol);
-				game.play(playerChoise, enemyChoise);
-			}
-		}]);
+			_this.name = 'user';
+			return _this;
+		}
 
 		return UserPlayer;
 	}(Player);
@@ -190,13 +166,11 @@
 		function ComputerPlayer() {
 			_classCallCheck(this, ComputerPlayer);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(ComputerPlayer).call(this));
-		}
+			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ComputerPlayer).call(this));
 
-		_createClass(ComputerPlayer, [{
-			key: 'randomChoise',
-			value: function randomChoise() {}
-		}]);
+			_this2.name = 'computer';
+			return _this2;
+		}
 
 		return ComputerPlayer;
 	}(Player);
@@ -12577,7 +12551,7 @@
 
 /***/ },
 /* 4 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -12587,47 +12561,81 @@
 	  value: true
 	});
 
+	var _lodash = __webpack_require__(2);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var game = function () {
-	  function game() {
+	var Game = function () {
+	  function Game() {
 	    var bonusModeEnabled = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 
-	    _classCallCheck(this, game);
+	    _classCallCheck(this, Game);
 
-	    this.rules = {
-	      rock: { winAgainst: ['scissor', 'lizard']
-	      },
-	      paper: { winAgainst: ['rock', 'spock']
-	      },
-	      scissor: { winAgainst: ['paper', 'lizard']
-	      }
-	    };
+	    this.rules = [{
+	      name: 'rock',
+	      winAgainst: ['scissor']
+	    }, {
+	      name: 'paper',
+	      winAgainst: ['rock']
+	    }, {
+	      name: 'scissor',
+	      winAgainst: ['paper']
+	    }];
 
 	    this.bonusModeEnabled = bonusModeEnabled;
+	    this.initBonusMode = this.initBonusMode.bind(this);
+	    this.getRandomSymbol = this.getRandomSymbol.bind(this);
+	    this.play = this.play.bind(this);
 	    if (bonusModeEnabled) {
 	      this.initBonusMode();
 	    }
 	  }
 
-	  _createClass(game, [{
-	    key: 'play',
-	    value: function play(playerChoise, enemyChoise) {}
-	  }, {
+	  _createClass(Game, [{
 	    key: 'initBonusMode',
 	    value: function initBonusMode() {
-	      this.rules.rock.winAgainst.push('lizard');
-	      this.rules.paper.winAgainst.push('spock');
-	      this.rules.scissor.winAgainst.push('lizard');
-	      this.rules.lizard.winAgainst = ['spock', 'paper'];
-	      this.rules.spock.winAgainst = ['scissor', 'rock'];
+	      _lodash2.default.find(this.rules, { name: 'rock' }).winAgainst.push('lizard');
+	      _lodash2.default.find(this.rules, { name: 'paper' }).winAgainst.push('spock');
+	      _lodash2.default.find(this.rules, { name: 'scissor' }).winAgainst.push('lizard');
+
+	      this.rules.push({
+	        name: 'lizard',
+	        winAgainst: ['spock', 'paper']
+	      }, {
+	        name: 'spock',
+	        winAgainst: ['scissor', 'rock']
+	      });
+	    }
+	  }, {
+	    key: 'getRandomSymbol',
+	    value: function getRandomSymbol() {
+	      return _lodash2.default.sample(this.rules).name;
+	    }
+	  }, {
+	    key: 'play',
+	    value: function play(_ref, _ref2) {
+	      var firstPlayer = _ref.player;
+	      var firstSymbol = _ref.symbol;
+	      var secondPlayer = _ref2.player;
+	      var secondSymbol = _ref2.symbol;
+
+	      var winner = undefined;
+	      if (firstSymbol === secondSymbol) {} else if (_lodash2.default.find(this.rules, { name: firstSymbol }).winAgainst.includes(secondSymbol)) {
+	        return winner = firstPlayer, winner;
+	      } else {
+	        return winner = secondPlayer, winner;
+	      }
 	    }
 	  }]);
 
-	  return game;
+	  return Game;
 	}();
 
-	exports.default = game;
+	exports.default = Game;
 
 /***/ }
 /******/ ]);

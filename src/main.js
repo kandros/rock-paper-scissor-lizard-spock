@@ -1,57 +1,34 @@
-// import $ from 'jQuery';
 import { UserPlayer, ComputerPlayer } from './Player/Player';
+import Game from './Game/Game';
 import _ from 'lodash';
 
-const rules = {
-  rock: { winAgainst:
-    [ 'scissor', 'lizard' ]
-  },
-  paper: { winAgainst:
-    [ 'rock', 'spock' ]
-  },
-  scissor: { winAgainst:
-    [ 'paper', 'lizard' ]
-  },
-};
-
-const choises = [
-  'rock',
-  'paper',
-  'scissor'
-];
-
-const player = new UserPlayer();
+const game = new Game();
+const user = new UserPlayer();
 const computer = new ComputerPlayer();
 
-// player.playAgains(computer.randomChose);
-
-
-
-// $('button').click(function() {
-//   const choise = $(this).data('game');
-//   startGame(choise);
-// })
 
 document.querySelector('.buttons').addEventListener('click', function(e) {
-  const choise = e.target.getAttribute('data-game');
-  startGame(choise);
+  if (e.target.nodeName === 'BUTTON') {
+    const choise = e.target.getAttribute('data-game');
+    playRound(choise);
+  }
 });
 
-function startGame(choise) {
-  const computerChoise = getComputerChoise();
-  console.log('tu hai giocato', choise);
-  if (choise === computerChoise) {
-    console.log('Pareggio');
-  } else if (_.includes(rules[choise].winAgainst, computerChoise)) {
-    console.log('hai vinto');
-  } else {
-    console.log('hai perso');
-  }
-  console.log('\n');
-}
+function playRound(symbol) {
+  const winner = game.play({
+    player: user,
+    symbol: symbol
+  },
+  {
+    player: computer,
+    symbol: game.getRandomSymbol()
+  });
 
-function getComputerChoise() {
-  const computerChoise = _.sample(choises);
-  console.log('il computer gioca', computerChoise);
-  return computerChoise;
+  if (winner) {
+    winner.increaseScore();
+    console.log(winner.name, 'won');
+    console.log(`${winner.name}'s score is now ${winner.getScore()}`);
+  } else {
+    console.log("it's a tie");
+  }
 }

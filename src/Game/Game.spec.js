@@ -104,13 +104,13 @@ describe('Game', () => {
     });
 
     describe('symbol', () => {
-      it('should win against one other symbols if bonusModeEnabled is false', () => {
+      it('should win against one other symbol only if bonusModeEnabled is false', () => {
         expect(
           game.rules.every(symbol => symbol.winAgainst.length === 1)
         ).toBe(true);
       });
 
-      it('should win against two other symbols if bonusModeEnabled is true', () => {
+      it('should win against two other symbols only if bonusModeEnabled is true', () => {
         const bonusGame = new Game(true);
         expect(
           bonusGame.rules.every(symbol => symbol.winAgainst.length === 2)
