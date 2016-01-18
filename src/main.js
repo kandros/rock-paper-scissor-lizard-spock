@@ -6,8 +6,8 @@ const upperMessage = document.querySelector('.upper-message');
 const mainContainer = document.querySelector('.main-container');
 const videoSection = document.querySelector('.video-section');
 const computer = new ComputerPlayer();
-let user;
 let game = new Game();
+let user;
 
 
 document.querySelector('.buttons').addEventListener('click', e => {
@@ -17,7 +17,7 @@ document.querySelector('.buttons').addEventListener('click', e => {
   }
   if (e.target.nodeName === 'BUTTON') {
     const choise = e.target.getAttribute('data-game');
-    suspance(function() {
+    suspanceCountDown(function() {
       playRound(choise);
     })
   }
@@ -43,18 +43,20 @@ function initBonusMode() {
 
 
 function playRound(symbol) {
+  const computerChoise = game.getRandomSymbol();
   const winner = game.play({
     player: user,
     symbol: symbol
   },
   {
     player: computer,
-    symbol: game.getRandomSymbol()
+    symbol: computerChoise
   });
 
   if (winner) {
     winner.increaseScore();
     upperMessage.innerHTML = `
+      ${symbol} vs ${computerChoise} <br>
       ${winner.name} ha vinto, ora ha ${winner.getScore()} punti!
     `;
     console.log(winner.name, 'won');
@@ -65,7 +67,7 @@ function playRound(symbol) {
   }
 }
 
-function suspance(callback) {
+function suspanceCountDown(callback) {
 
   var countDown = 3
   mainContainer.classList.add('suspance');

@@ -1,4 +1,6 @@
 ## Usage
+Run `npm install`
+
 Run `npm start` to run a webserver with livereload
 
 ## Testing

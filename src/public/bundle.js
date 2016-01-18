@@ -62,8 +62,8 @@
 	var mainContainer = document.querySelector('.main-container');
 	var videoSection = document.querySelector('.video-section');
 	var computer = new _Player.ComputerPlayer();
-	var user = undefined;
 	var game = new _Game2.default();
+	var user = undefined;
 
 	document.querySelector('.buttons').addEventListener('click', function (e) {
 	  if (!user) {
@@ -73,7 +73,7 @@
 	  if (e.target.nodeName === 'BUTTON') {
 	    (function () {
 	      var choise = e.target.getAttribute('data-game');
-	      suspance(function () {
+	      suspanceCountDown(function () {
 	        playRound(choise);
 	      });
 	    })();
@@ -99,17 +99,18 @@
 	}
 
 	function playRound(symbol) {
+	  var computerChoise = game.getRandomSymbol();
 	  var winner = game.play({
 	    player: user,
 	    symbol: symbol
 	  }, {
 	    player: computer,
-	    symbol: game.getRandomSymbol()
+	    symbol: computerChoise
 	  });
 
 	  if (winner) {
 	    winner.increaseScore();
-	    upperMessage.innerHTML = '\n      ' + winner.name + ' ha vinto, ora ha ' + winner.getScore() + ' punti!\n    ';
+	    upperMessage.innerHTML = '\n      ' + symbol + ' vs ' + computerChoise + ' <br>\n      ' + winner.name + ' ha vinto, ora ha ' + winner.getScore() + ' punti!\n    ';
 	    console.log(winner.name, 'won');
 	    console.log(winner.name + '\'s score is now ' + winner.getScore());
 	  } else {
@@ -118,7 +119,7 @@
 	  }
 	}
 
-	function suspance(callback) {
+	function suspanceCountDown(callback) {
 
 	  var countDown = 3;
 	  mainContainer.classList.add('suspance');
@@ -194,12 +195,12 @@
 	var UserPlayer = exports.UserPlayer = function (_Player) {
 		_inherits(UserPlayer, _Player);
 
-		function UserPlayer(name) {
+		function UserPlayer() {
+			var name = arguments.length <= 0 || arguments[0] === undefined ? user : arguments[0];
+
 			_classCallCheck(this, UserPlayer);
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserPlayer).call(this));
-
-			_this.name = 'user';
 
 			_this.name = name;
 			return _this;
@@ -212,12 +213,17 @@
 		_inherits(ComputerPlayer, _Player2);
 
 		function ComputerPlayer() {
+			var _Object$getPrototypeO;
+
+			var _temp, _this2, _ret;
+
 			_classCallCheck(this, ComputerPlayer);
 
-			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ComputerPlayer).call(this));
+			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+				args[_key] = arguments[_key];
+			}
 
-			_this2.name = 'computer';
-			return _this2;
+			return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ComputerPlayer)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this2), _this2.name = 'computer', _temp), _possibleConstructorReturn(_this2, _ret);
 		}
 
 		return ComputerPlayer;

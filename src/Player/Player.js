@@ -22,8 +22,7 @@ export default class Player {
 }
 
 export class UserPlayer extends Player {
-	name = 'user';
-	constructor(name){
+	constructor(name = user){
 		super();
 		this.name = name;
 	}
@@ -31,7 +30,4 @@ export class UserPlayer extends Player {
 
 export class ComputerPlayer extends Player {
 	name = 'computer';
-	constructor(){
-		super();
-	}
 }
