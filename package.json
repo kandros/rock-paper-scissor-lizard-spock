@@ -6,7 +6,7 @@
   "scripts": {
     "webpack": "webpack",
     "test": "mocha ./src/**/*.spec.js --compilers js:babel-core/register",
-    "start": "webpack -w; browser-sync start --server src/public"
+    "start": "browser-sync start --server src/public"
   },
   "keywords": [],
   "author": "",

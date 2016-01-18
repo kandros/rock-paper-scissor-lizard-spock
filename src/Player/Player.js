@@ -23,8 +23,9 @@ export default class Player {
 
 export class UserPlayer extends Player {
 	name = 'user';
-	constructor(){
+	constructor(name){
 		super();
+		this.name = name;
 	}
 }
 

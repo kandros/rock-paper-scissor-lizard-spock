@@ -61,11 +61,15 @@
 	var upperMessage = document.querySelector('.upper-message');
 	var mainContainer = document.querySelector('.main-container');
 	var videoSection = document.querySelector('.video-section');
-	var user = new _Player.UserPlayer();
 	var computer = new _Player.ComputerPlayer();
+	var user = undefined;
 	var game = new _Game2.default();
 
 	document.querySelector('.buttons').addEventListener('click', function (e) {
+	  if (!user) {
+	    var name = prompt("Prima partita, Inserire il proprio nome");
+	    user = new _Player.UserPlayer(name);
+	  }
 	  if (e.target.nodeName === 'BUTTON') {
 	    (function () {
 	      var choise = e.target.getAttribute('data-game');
@@ -83,7 +87,7 @@
 	document.querySelector('.wtf').addEventListener('click', function (e) {
 	  if (videoSection.className.indexOf('is-hidden') !== -1) {
 	    videoSection.classList.remove('is-hidden');
-	    window.scrollTo(0, 10000);
+	    window.scrollTo(0, window.innerHeight);
 	  } else {
 	    videoSection.classList.add('is-hidden');
 	  }
@@ -190,12 +194,14 @@
 	var UserPlayer = exports.UserPlayer = function (_Player) {
 		_inherits(UserPlayer, _Player);
 
-		function UserPlayer() {
+		function UserPlayer(name) {
 			_classCallCheck(this, UserPlayer);
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserPlayer).call(this));
 
 			_this.name = 'user';
+
+			_this.name = name;
 			return _this;
 		}
 

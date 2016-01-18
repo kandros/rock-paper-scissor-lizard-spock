@@ -5,12 +5,16 @@ import _ from 'lodash';
 const upperMessage = document.querySelector('.upper-message');
 const mainContainer = document.querySelector('.main-container');
 const videoSection = document.querySelector('.video-section');
-const user = new UserPlayer();
 const computer = new ComputerPlayer();
+let user;
 let game = new Game();
 
 
 document.querySelector('.buttons').addEventListener('click', e => {
+  if (!user) {
+    const name = prompt("Prima partita, Inserire il proprio nome");
+    user = new UserPlayer(name)
+  }
   if (e.target.nodeName === 'BUTTON') {
     const choise = e.target.getAttribute('data-game');
     suspance(function() {
@@ -26,7 +30,7 @@ document.querySelector('.bazinga').addEventListener('click', e => {
 document.querySelector('.wtf').addEventListener('click', e => {
   if (videoSection.className.indexOf('is-hidden') !== -1) {
     videoSection.classList.remove('is-hidden');
-    window.scrollTo(0, 10000);
+    window.scrollTo(0, window.innerHeight);
   } else {
     videoSection.classList.add('is-hidden');
   }
