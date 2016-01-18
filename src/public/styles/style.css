@@ -1,0 +1,111 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+.main-container {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(145deg, #f83 0, #fa2562 80%, #fa2562 100%);
+  height: 60vh;
+  padding-top: 40vh;
+}
+.main-container .buttons .bonus-button {
+  display: none;
+}
+
+#messages {
+  height: 20vh;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  font-size: 20px;
+}
+.upper-message {
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+.main-container.suspance .upper-message {
+  animation: super-pulse 1s infinite;
+}
+
+
+.main-container.suspance .lower-message {
+  display: none;
+}
+
+.main-container.suspance .buttons {
+  display: none;
+}
+
+
+.buttons {
+  margin: 0 auto;
+  text-align: center;
+}
+.buttons button {
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 4px;
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  width: 200px;
+  padding: 10px 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.buttons button:focus {
+  outline: none;
+}
+.buttons button:active {
+  background-color: rgba(255,255,255,0.4);
+}
+
+.bazinga {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100px;
+  cursor: pointer;
+  animation: pulse 1.5s infinite;
+}
+
+.main-container.is-bonus {
+  background: url('../assets/tbbt-bg.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.main-container.is-bonus #messages {
+	-webkit-filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+}
+.main-container.is-bonus .buttons button {
+  width: 150px;
+  -webkit-filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+  background: rgba(255,255,255,0.4);
+}
+.main-container.is-bonus .bonus-button {
+  display: inline-block;
+}
+.main-container.is-bonus+.bazinga {
+  display: none;
+}
+
+@-webkit-keyframes pulse{
+  0%{
+    transform: scale(0.98);
+  }
+  50%{
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(0.98);
+  }
+}
+@-webkit-keyframes super-pulse{
+  0%{
+    transform: scale(0.98);
+  }
+  50%{
+    transform: scale(2);
+  }
+  100%{
+    transform: scale(0.98);
+  }
+}

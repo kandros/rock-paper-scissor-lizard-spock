@@ -58,16 +58,31 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var game = new _Game2.default();
+	var upperMessage = document.querySelector('.upper-message');
+	var mainContainer = document.querySelector('.main-container');
 	var user = new _Player.UserPlayer();
 	var computer = new _Player.ComputerPlayer();
+	var game = new _Game2.default();
 
 	document.querySelector('.buttons').addEventListener('click', function (e) {
 	  if (e.target.nodeName === 'BUTTON') {
-	    var choise = e.target.getAttribute('data-game');
-	    playRound(choise);
+	    (function () {
+	      var choise = e.target.getAttribute('data-game');
+	      suspance(function () {
+	        playRound(choise);
+	      });
+	    })();
 	  }
 	});
+
+	document.querySelector('.bazinga').addEventListener('click', function (e) {
+	  initBonusMode();
+	});
+
+	function initBonusMode() {
+	  game = new _Game2.default(true);
+	  document.querySelector('.main-container').classList.add('is-bonus');
+	}
 
 	function playRound(symbol) {
 	  var winner = game.play({
@@ -80,11 +95,28 @@
 
 	  if (winner) {
 	    winner.increaseScore();
+	    upperMessage.innerHTML = '\n      ' + winner.name + ' ha vinto, ora ha ' + winner.getScore() + ' punti\n    ';
 	    console.log(winner.name, 'won');
 	    console.log(winner.name + '\'s score is now ' + winner.getScore());
 	  } else {
+	    upperMessage.innerHTML = 'Pareggio!';
 	    console.log("it's a tie");
 	  }
+	}
+
+	function suspance(callback) {
+
+	  var countDown = 3;
+	  mainContainer.classList.add('suspance');
+	  upperMessage.innerHTML = countDown;
+	  var countdownTimer = setInterval(function () {
+	    upperMessage.innerHTML = countDown = countDown - 1;
+	    if (countDown <= 0) {
+	      clearInterval(countdownTimer);
+	      mainContainer.classList.remove('suspance');
+	      callback();
+	    }
+	  }, 1000);
 	}
 
 /***/ },
